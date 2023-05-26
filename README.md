@@ -3,9 +3,26 @@
 ![alt text](./infra.png)
 
 
+# Annotations:
+
+- Load Balancer: Distributes incoming traffic across the front-end EC2 instances for scalability and fault tolerance.
+- Auto Scaling Group: Manages the number of front-end and back-end EC2 instances based on demand, ensuring availability and scalability.
+- API Gateway: Acts as the central entry point for the back-end services, enabling API management, request routing, and authentication.
+- Lambda: Executes the back-end functions for data retrieval and aggregation based on user input, connecting to various data sources.
+- RDS: Stores structured data and provides high availability with features like Multi-AZ deployment and read replicas.
+- S3: Stores unstructured or semi-structured data, serving as a scalable and durable storage solution.
+
+- Optional: 
+Other Data Sources: an additional data sources beyond RDS and S3 that the back-end functions can connect to, providing flexibility for integrating with external systems or services.
+
+
 **Accessing Data Stores using a Common Pattern:**
 
 To ensure the application can access any data store using a common pattern, we can utilize AWS Lambda functions as the glue between the application servers and the data stores. Each data store can have a corresponding Lambda function acting as an API gateway for the specific store. The Lambda functions can handle the communication and data retrieval from the respective data stores, abstracting the complexity for the front-end developers. This approach allows for a consistent interface and decouples the application from the data stores.
+
+- Implement a common data access pattern, such as the Repository Pattern, to abstract the data sources and provide a consistent interface for the application to access any data store.
+
+- Create separate data access modules for each data store, encapsulating the logic required to retrieve data. This modular approach allows for easy integration of new data sources in the future
 
 **Handling Spikes of Heavy Traffic and Scaling Strategies:**
 
@@ -33,7 +50,20 @@ In addition, self hosted Grafana and Prometheus could be to get all metrics and 
 - AWS Database Migration Service: If data migrations are required during application updates, the Database Migration Service can assist in a smooth transition without downtime.
 
 - Regular Backups: Implement regular backups for the databases using automated backup features available in RDS or DynamoDB, ensuring data durability and enabling point-in-time recovery if needed.
+Set up automated backup mechanisms for critical data stores to prevent data loss in case of failures or disasters.
 
-**CI/CD**
+- Establish disaster recovery plans and implement strategies like multi-region replication or automated failover to ensure high availability and minimize downtime.
+
+**Continuous Integration and Deployment:**
 
 For Ci/Cd i would use any modern tool such as GitHub Actions or GitLab CI to build, test the image that being pushed to AWS ECR and after that deployed to relevant environment. 
+
+Utilize a robust CI/CD (Continuous Integration/Continuous Deployment) pipeline to automate the deployment process and ensure smooth and quick releases of new versions.
+Integrate the CI/CD pipeline with version control systems like Git, triggering automatic builds and deployments whenever changes are pushed to the repository.
+Implement automated testing, including unit tests, integration tests, and end-to-end tests, to ensure the stability and correctness of the application before and after deployment.
+
+**Security and Access Control**
+
+- Implement appropriate security measures, including encrypted communication (HTTPS), secure user authentication, and authorization mechanisms, to protect user data and prevent unauthorized access.
+
+- Apply the principle of least privilege, granting the web application's back-end only the necessary permissions to access the required data sources. This reduces the risk of data breaches or accidental access to sensitive information.

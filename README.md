@@ -33,3 +33,7 @@ In addition, self hosted Grafana and Prometheus could be to get all metrics and 
 - AWS Database Migration Service: If data migrations are required during application updates, the Database Migration Service can assist in a smooth transition without downtime.
 
 - Regular Backups: Implement regular backups for the databases using automated backup features available in RDS or DynamoDB, ensuring data durability and enabling point-in-time recovery if needed.
+
+**CI/CD**
+
+For Ci/Cd i would use any modern tool such as GitHub Actions or GitLab CI to build, test the image that being pushed to AWS ECR and after that deployed to relevant environment. 
